@@ -1,10 +1,11 @@
+use crate::BranchNode;
 use crate::h256::H256;
 use crate::traits::Hasher;
-
+use serde::{Serialize,Deserialize};
 const MERGE_NORMAL: u8 = 1;
 const MERGE_ZEROS: u8 = 2;
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone,Serialize,Deserialize)]
 pub enum MergeValue {
     Value(H256),
     MergeWithZero {
@@ -192,4 +193,10 @@ pub fn merge_with_zero<H: Hasher + Default>(
             }
         }
     }
+}
+
+#[test]
+pub fn test_sec(){
+    let node=BranchNode::new_empty();
+    serde_json::to_vec(&node);
 }
